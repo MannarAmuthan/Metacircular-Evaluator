@@ -75,6 +75,13 @@ public class Evaluator {
                     return EvalUnit.evalList(new EvalList(op.subList(1, op.size())));
                 }
 
+                case "cons": {
+                    Atom opOne = eval(list.get(1), environment).getAtom();
+                    EvalList opTwo = eval(list.get(2), environment).getEvalList();
+                    opTwo.append(EvalUnit.atom(opOne));
+                    return EvalUnit.evalList(opTwo);
+                }
+
                 case "eq": {
                     Atom opOne = eval(list.get(1), environment).getAtom();
                     Atom opTwo = eval(list.get(2), environment).getAtom();

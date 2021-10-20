@@ -55,6 +55,17 @@ public class EvaluatorTest {
     }
 
     @Test
+    void shouldAddElementToList() {
+        String programOne="(define x (cons  3 (quote(1 2))  ) )";
+
+        Environment environmentOne = Evaluator.evaluateProgramString(programOne);
+
+        assert environmentOne.get("x").getEvalList().getList().get(0).getAtom().getValue().equals("1");
+        assert environmentOne.get("x").getEvalList().getList().get(1).getAtom().getValue().equals("2");
+        assert environmentOne.get("x").getEvalList().getList().get(2).getAtom().getValue().equals("3");
+    }
+
+    @Test
     void testShouldEvaluateBinaryExpressions() {
         String programOne="(define x (or 1 1))";
         String programTwo="(if (or (eq 1 0) (eq 1 0)) (define x 10) (define x 20))";
