@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Procedure {
     EvalUnit evalUnit;
-    private List<EvalUnit> args;
+    List<EvalUnit> args;
 
     public Procedure(EvalUnit evalUnit, EvalUnit args) {
         this.evalUnit = evalUnit;

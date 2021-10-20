@@ -9,16 +9,16 @@ import java.util.Map;
 
 public class Environment {
     Map<String, EvalUnit> variables;
-    public Map<String, Procedure> methods;
+    Map<String, Procedure> methods;
 
     public Environment() {
         this.variables = new HashMap<>();
         this.methods = new HashMap<>();
     }
 
-    public Environment(Map<String, Procedure> methods) {
+    public Environment(Environment environment) {
         this.variables = new HashMap<>();
-        this.methods = methods;
+        this.methods = environment.methods;
     }
 
     public EvalUnit get(String variableName){

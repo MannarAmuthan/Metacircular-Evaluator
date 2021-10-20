@@ -80,8 +80,7 @@ public class EvaluatorTest {
         String programTwo="((defun fibonacci (N)\n" +
                 "    (if (or (eq N 0) (eq N 1)) N ( + (fibonacci ((- N 1))) (fibonacci ((- N 2))) )   \n" +
                 "            ))\n" +
-                "(define x (fibonacci (20)))\n" +
-                "            )";
+                "(define x (fibonacci (20))))";
 
         Environment environmentOne = Evaluator.evaluateProgramString(programOne);
         Environment environmentTwo = Evaluator.evaluateProgramString(programTwo);

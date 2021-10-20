@@ -6,6 +6,7 @@ import elements.structures.Atom;
 import elements.structures.AtomType;
 import elements.structures.EvalList;
 import elements.structures.EvalUnit;
+import elements.utils.ArithmeticUtils;
 
 
 import java.util.*;
@@ -84,7 +85,8 @@ public class Evaluator {
                 case "or": {
                     Atom opOne = eval(list.get(1), environment).getAtom();
                     Atom opTwo = eval(list.get(2), environment).getAtom();
-                    if (opOne.getValue().equals("0") && opTwo.getValue().equals("0")) return EvalUnit.atom(Atom.getAtom("0"));
+                    if (opOne.getValue().equals("0") && opTwo.getValue().equals("0"))
+                        return EvalUnit.atom(Atom.getAtom("0"));
                     return EvalUnit.atom(Atom.getAtom("1"));
                 }
 
@@ -107,8 +109,8 @@ public class Evaluator {
                 default: {
                     String procedureName = list.get(0).getAtom().getValue();
                     Procedure method = environment.getMethod(procedureName);
-                    List<EvalUnit> paramList = list.get(1).getEvalList().getList().stream().map(eu -> eval(eu,environment)).collect(Collectors.toList());
-                    EvalUnit callbackResult = method.call(paramList, new Environment(environment.methods));
+                    List<EvalUnit> paramList = list.get(1).getEvalList().getList().stream().map(eu -> eval(eu, environment)).collect(Collectors.toList());
+                    EvalUnit callbackResult = method.call(paramList, new Environment(environment));
                     return callbackResult;
                 }
             }
@@ -122,25 +124,9 @@ public class Evaluator {
         return parsed;
     }
 
-    public static void main(String[] args) {
-//        String program = "(((define t 5)(define t 15))(define t 25))";
-//        String program = "(if 0 (define t 15) (((define t 5)(define t 15))(define t 800)))";
-//        String program = "(define a (cdr (quote(1 2 3))))";
-//        String program = "(define myVar (* (/ 100 10) (+ 6 1)))";
-//        String program="((defun adder (a b) (+ a b)) (define isEleven (eq 11 (adder (5 6)))))";
-//        String program="((defun inc (a) (+ a 1)) (define isSix (eq 6 (inc (5)))))";
-        String program="((defun fibonacci (N)\n" +
-                "    (if (or (eq N 0) (eq N 1)) N ( + (fibonacci ((- N 1))) (fibonacci ((- N 2))) )   \n" +
-                "            ))\n" +
-                "\n" +
-                "(define x (fibonacci (10)))\n" +
-                "            )";
-        evaluateProgramString(program);
-        System.out.println();
-    }
 
     public static Environment evaluateProgramString(String program) {
-        List<String> collect = Arrays.stream(program.replace("\n","").replace("(", " ( ").replace(")", " ) ").split(" ")).filter(st -> !st.equals("")).collect(Collectors.toList());
+        List<String> collect = Arrays.stream(program.replace("\n", "").replace("(", " ( ").replace(")", " ) ").split(" ")).filter(st -> !st.equals("")).collect(Collectors.toList());
         Deque<String> stringDeque = new LinkedList<>(collect);
         EvalUnit parse = parse(stringDeque);
         Environment environment = new Environment();

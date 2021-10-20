@@ -1,4 +1,4 @@
-package elements;
+package elements.utils;
 
 import elements.structures.Atom;
 
