@@ -9,6 +9,9 @@ import elements.structures.EvalUnit;
 import elements.utils.ArithmeticUtils;
 
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -132,12 +135,32 @@ public class Evaluator {
     }
 
 
-    public static Environment evaluateProgramString(String program) {
+    public static Environment evaluateProgramString(String program) throws IOException {
+        String packageProgram=readFile("meta/binaryOperations.jlsp");
+        program="("+packageProgram+program+")";
         List<String> collect = Arrays.stream(program.replace("\n", "").replace("(", " ( ").replace(")", " ) ").split(" ")).filter(st -> !st.equals("")).collect(Collectors.toList());
         Deque<String> stringDeque = new LinkedList<>(collect);
         EvalUnit parse = parse(stringDeque);
         Environment environment = new Environment();
         eval(parse, environment);
         return environment;
+    }
+
+    private static String readFile(String file) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        String         line = null;
+        StringBuilder  stringBuilder = new StringBuilder();
+        String         ls = System.getProperty("line.separator");
+
+        try {
+            while((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+                stringBuilder.append(ls);
+            }
+
+            return stringBuilder.toString();
+        } finally {
+            reader.close();
+        }
     }
 }
