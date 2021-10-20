@@ -95,15 +95,34 @@ public class EvaluatorTest {
 
     @Test
     void shouldEvaluateAndOperation() throws IOException {
-        String packageProgram=readFile("resources/andOperation.jlsp");
+        String packageProgram=readFile("resources/binaryOperations.jlsp");
         String programOne="("+packageProgram+"(define x (and (1 (eq 1 1))))"+")";
         String programTwo="("+packageProgram+"(define x (and (1 0)))"+")";
+        String programThree="("+packageProgram+"(define x (and (0 0)))"+")";
 
         Environment environmentOne = Evaluator.evaluateProgramString(programOne);
         Environment environmentTwo = Evaluator.evaluateProgramString(programTwo);
+        Environment environmentThree = Evaluator.evaluateProgramString(programThree);
 
         assert environmentOne.get("x").getAtom().getValue().equals("1");
         assert environmentTwo.get("x").getAtom().getValue().equals("0");
+        assert environmentThree.get("x").getAtom().getValue().equals("0");
+    }
+
+    @Test
+    void shouldEvaluateXOROperation() throws IOException {
+        String packageProgram=readFile("resources/binaryOperations.jlsp");
+        String programOne="("+packageProgram+"(define x (xor (1 (eq 1 1))))"+")";
+        String programTwo="("+packageProgram+"(define x (xor (1 0)))"+")";
+        String programThree="("+packageProgram+"(define x (xor (0 0)))"+")";
+
+        Environment environmentOne = Evaluator.evaluateProgramString(programOne);
+        Environment environmentTwo = Evaluator.evaluateProgramString(programTwo);
+        Environment environmentThree = Evaluator.evaluateProgramString(programThree);
+
+        assert environmentOne.get("x").getAtom().getValue().equals("0");
+        assert environmentTwo.get("x").getAtom().getValue().equals("1");
+        assert environmentThree.get("x").getAtom().getValue().equals("1");
     }
 
     private String readFile(String file) throws IOException {

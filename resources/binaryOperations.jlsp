@@ -1,0 +1,7 @@
+(defun and(opOne opTwo)
+    (if (eq opOne 1) (eq opTwo 1) 0)
+)
+
+(defun xor(opOne opTwo)
+    (eq 0 (and (opOne opTwo)))
+)
