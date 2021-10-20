@@ -2,6 +2,10 @@
     (if (eq opOne 1) (eq opTwo 1) 0)
 )
 
+(defun not(op)
+    (eq 0 op)
+)
+
 (defun xor(opOne opTwo)
-    (eq 0 (and (opOne opTwo)))
+    (not ((and (opOne opTwo))))
 )

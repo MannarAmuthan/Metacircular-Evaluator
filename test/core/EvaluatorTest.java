@@ -110,6 +110,19 @@ public class EvaluatorTest {
     }
 
     @Test
+    void shouldEvaluateNotOperation() throws IOException {
+        String packageProgram=readFile("resources/binaryOperations.jlsp");
+        String programOne="("+packageProgram+"(define x (not (1)))"+")";
+        String programTwo="("+packageProgram+"(define x (not (0)))"+")";
+
+        Environment environmentOne = Evaluator.evaluateProgramString(programOne);
+        Environment environmentTwo = Evaluator.evaluateProgramString(programTwo);
+
+        assert environmentOne.get("x").getAtom().getValue().equals("0");
+        assert environmentTwo.get("x").getAtom().getValue().equals("1");
+    }
+
+    @Test
     void shouldEvaluateXOROperation() throws IOException {
         String packageProgram=readFile("resources/binaryOperations.jlsp");
         String programOne="("+packageProgram+"(define x (xor (1 (eq 1 1))))"+")";
