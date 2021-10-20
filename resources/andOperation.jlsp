@@ -1,0 +1,3 @@
+(defun and(opOne opTwo)
+    (if (eq opOne 1) (eq opTwo 1) 1)
+)

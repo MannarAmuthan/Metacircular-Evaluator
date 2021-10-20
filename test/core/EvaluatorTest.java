@@ -4,6 +4,10 @@ package core;
 import elements.Environment;
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 
 public class EvaluatorTest {
 
@@ -87,5 +91,36 @@ public class EvaluatorTest {
 
         assert environmentOne.get("isEleven").getAtom().getValue().equals("1");
         assert environmentTwo.get("x").getAtom().getValue().equals("6765");
+    }
+
+    @Test
+    void shouldEvaluateAndOperation() throws IOException {
+        String packageProgram=readFile("resources/andOperation.jlsp");
+        String programOne="("+packageProgram+"(define x (and (1 (eq 1 1))))"+")";
+        String programTwo="("+packageProgram+"(define x (and (1 0)))"+")";
+
+        Environment environmentOne = Evaluator.evaluateProgramString(programOne);
+        Environment environmentTwo = Evaluator.evaluateProgramString(programTwo);
+
+        assert environmentOne.get("x").getAtom().getValue().equals("1");
+        assert environmentTwo.get("x").getAtom().getValue().equals("0");
+    }
+
+    private String readFile(String file) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        String         line = null;
+        StringBuilder  stringBuilder = new StringBuilder();
+        String         ls = System.getProperty("line.separator");
+
+        try {
+            while((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+                stringBuilder.append(ls);
+            }
+
+            return stringBuilder.toString();
+        } finally {
+            reader.close();
+        }
     }
 }
