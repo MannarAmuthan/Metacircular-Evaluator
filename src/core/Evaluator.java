@@ -89,9 +89,9 @@ public class Evaluator {
                 }
 
                 case "eq": {
-                    Atom opOne = eval(list.get(1), environment).getAtom();
-                    Atom opTwo = eval(list.get(2), environment).getAtom();
-                    if (opOne.getValue().equals(opTwo.getValue())) return EvalUnit.atom(Atom.getAtom("1"));
+                    EvalUnit opOne = eval(list.get(1), environment);
+                    EvalUnit opTwo = eval(list.get(2), environment);
+                    if (opOne.equals(opTwo)) return EvalUnit.atom(Atom.getAtom("1"));
                     return EvalUnit.atom(Atom.getAtom("0"));
                 }
 

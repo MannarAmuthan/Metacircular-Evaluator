@@ -24,4 +24,9 @@ public class Atom{
         return value;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        Atom another=(Atom) obj;
+        return value.equals(another.value);
+    }
 }

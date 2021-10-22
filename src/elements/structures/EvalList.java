@@ -22,4 +22,16 @@ public class EvalList{
     public List<EvalUnit> getList() {
         return list;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        EvalList another=(EvalList) obj;
+        if(another.getList().size()!=list.size()) return false;
+        for(int i=0;i<list.size();i++){
+            if(!another.getList().get(i).equals(list.get(i))){
+                return false;
+            }
+        }
+        return true;
+    }
 }

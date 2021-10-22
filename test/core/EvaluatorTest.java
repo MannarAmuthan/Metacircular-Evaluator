@@ -27,6 +27,18 @@ public class EvaluatorTest {
     }
 
     @Test
+    void testShouldConsiderLiteralAsStringIfNotExistsAsVariableInEnvironment() throws IOException {
+        String programOne="((define a 10) (define b a))";
+        String programTwo="((define a 10) (define b c))";
+
+        Environment environmentOne = Evaluator.evaluateProgramString(programOne);
+        Environment environmentTwo = Evaluator.evaluateProgramString(programTwo);
+
+        assert environmentOne.get("b").getAtom().getValue().equals("10");
+        assert environmentTwo.get("b").getAtom().getValue().equals("c");
+    }
+
+    @Test
     void testShouldEvaluateConditionalStatements() throws IOException {
         String programOne="(if 1 (define x 10) (define x 20))";
         String programTwo="(if 0 (define x 10) (define x 20))";
@@ -59,6 +71,19 @@ public class EvaluatorTest {
         Environment environmentTwo = Evaluator.evaluateProgramString(programTwo);
 
         assert environmentOne.get("x").getAtom().getValue().equals("0");
+        assert environmentTwo.get("x").getAtom().getValue().equals("10");
+    }
+
+
+    @Test
+    void shouldEquateTwoElementsCorrectly() throws IOException{
+        String programOne="(define x (eq (quote(1 2 3)) (quote(1 2 3))))";
+        String programTwo="(if (eq 0 0) (define x 10) (define x 20))";
+
+        Environment environmentOne = Evaluator.evaluateProgramString(programOne);
+        Environment environmentTwo = Evaluator.evaluateProgramString(programTwo);
+
+        assert environmentOne.get("x").getAtom().getValue().equals("1");
         assert environmentTwo.get("x").getAtom().getValue().equals("10");
     }
 

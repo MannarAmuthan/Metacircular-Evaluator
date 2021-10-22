@@ -30,4 +30,16 @@ public class EvalUnit extends Either<Atom, EvalList> {
     public EvalList getEvalList(){
         return super.getR();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        EvalUnit another=(EvalUnit) obj;
+        if(isAtomPresent()&&another.isAtomPresent()){
+            return getAtom().equals(another.getAtom());
+        }
+        else if(isEvalListPresent()&&another.isEvalListPresent()){
+            return getEvalList().equals(another.getEvalList());
+        }
+        return false;
+    }
 }
