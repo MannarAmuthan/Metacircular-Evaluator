@@ -1,6 +1,6 @@
 package elements.structures;
 
-import meta.Either;
+import elements.utils.Either;
 
 public class EvalUnit extends Either<Atom, EvalList> {
     private EvalUnit(Atom atom,EvalList evalList) {
