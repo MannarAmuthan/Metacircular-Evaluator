@@ -3,9 +3,6 @@ package core;
 
 import elements.Environment;
 import org.junit.jupiter.api.Test;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 
 
@@ -41,6 +38,17 @@ public class EvaluatorTest {
         assert environmentTwo.get("x").getAtom().getValue().equals("20");
     }
 
+    @Test
+    void shouldEvaluateWhetherElementIsAtom()  throws IOException {
+        String programOne="(if (atom? 5) (define x 10) (define x 20))";
+        String programTwo="(define x (atom? (2)))";
+
+        Environment environmentOne = Evaluator.evaluateProgramString(programOne);
+        Environment environmentTwo = Evaluator.evaluateProgramString(programTwo);
+
+        assert environmentOne.get("x").getAtom().getValue().equals("10");
+        assert environmentTwo.get("x").getAtom().getValue().equals("0");
+    }
 
     @Test
     void testShouldEvaluateCBooleanStatements() throws IOException {

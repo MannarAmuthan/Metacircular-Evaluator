@@ -52,6 +52,9 @@ public class Evaluator {
                 case "quote": {
                     return list.get(1);
                 }
+                case "atom?": {
+                    return list.get(1).isAtomPresent()?EvalUnit.atom(Atom.getAtom("1")):EvalUnit.atom(Atom.getAtom("0"));
+                }
                 case "define": {
                     Atom var = list.get(1).getAtom();
                     EvalUnit exp = list.get(2);
