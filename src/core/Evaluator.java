@@ -139,8 +139,7 @@ public class Evaluator {
 
 
     public static Environment evaluateProgramString(String program) throws IOException {
-        String packageProgram=readFile("meta/binaryOperations.jlsp");
-        program="("+packageProgram+program+")";
+        program=importPackages(program);
         List<String> collect = Arrays.stream(program.replace("\n", "").replace("(", " ( ").replace(")", " ) ").split(" ")).filter(st -> !st.equals("")).collect(Collectors.toList());
         Deque<String> stringDeque = new LinkedList<>(collect);
         EvalUnit parse = parse(stringDeque);
@@ -165,5 +164,13 @@ public class Evaluator {
         } finally {
             reader.close();
         }
+    }
+
+    private static String importPackages(String program) throws IOException {
+        String packageProgram=readFile("meta/binaryOperations.jlsp")
+                + readFile("meta/factorial.jlsp")
+                +readFile("meta/oddOrEven.jlsp");
+        return "("+packageProgram+program+")";
+
     }
 }

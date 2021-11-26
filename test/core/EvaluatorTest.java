@@ -178,4 +178,25 @@ public class EvaluatorTest {
         assert environmentTwo.get("x").getAtom().getValue().equals("1");
         assert environmentThree.get("x").getAtom().getValue().equals("1");
     }
+
+    @Test
+    void shouldDoFactorial() throws IOException {
+        String programOne="(define y (factorial (10)))";
+
+        Environment environmentOne = Evaluator.evaluateProgramString(programOne);
+
+        assert environmentOne.get("y").getAtom().getValue().equals("3628800");
+    }
+
+    @Test
+    void shouldFindIsEvenOrOdd() throws IOException {
+        String programOne="(define y (isEven (8)))";
+        String programTwo="(define y (isOdd (7)))";
+
+        Environment environmentOne = Evaluator.evaluateProgramString(programOne);
+        Environment environmentTwo = Evaluator.evaluateProgramString(programTwo);
+
+        assert environmentOne.get("y").getAtom().getValue().equals("1");
+        assert environmentTwo.get("y").getAtom().getValue().equals("1");
+    }
 }

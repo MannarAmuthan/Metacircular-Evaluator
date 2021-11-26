@@ -1,0 +1,9 @@
+(
+  defun isEven(N)
+  (if (eq (% N 2)  0)  1 0)
+)
+
+(
+  defun isOdd(N)
+  (if (eq (isEven(N)) 0) 1  0)
+)
